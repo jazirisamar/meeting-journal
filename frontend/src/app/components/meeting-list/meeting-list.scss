@@ -1,0 +1,286 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;600&display=swap');
+
+$bg: #eef0f4;
+$surface: #ffffff;
+$ink: #171b21;
+$ink-soft: #5c6470;
+$ink-faint: #9aa1ac;
+$accent: #3652e3;
+$accent-hover: #2c44c4;
+$accent-soft: #edeffd;
+$danger: #d8455b;
+$danger-soft: #fbeaee;
+$success: #17a589;
+$border: #e1e4ea;
+
+$font-display: 'Space Grotesk', 'Segoe UI', sans-serif;
+$font-body: 'Inter', 'Segoe UI', sans-serif;
+$font-mono: 'JetBrains Mono', 'Consolas', monospace;
+
+:host {
+  display: block;
+  font-family: $font-body;
+}
+
+.page {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 32px 24px 60px;
+}
+
+.page-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  margin-bottom: 28px;
+  flex-wrap: wrap;
+  gap: 16px;
+
+  h1 {
+    font-family: $font-display;
+    font-size: 28px;
+    font-weight: 700;
+    color: $ink;
+    margin: 0 0 4px;
+    letter-spacing: -0.01em;
+  }
+
+  .subtitle {
+    color: $ink-soft;
+    font-size: 14px;
+    margin: 0;
+  }
+}
+
+.new-btn {
+  background: $accent;
+  color: #fff;
+  border: none;
+  padding: 12px 22px;
+  border-radius: 10px;
+  font-family: $font-body;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background 0.15s ease;
+
+  &:hover { background: $accent-hover; }
+}
+
+.filters-bar {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 28px;
+  flex-wrap: wrap;
+}
+
+.search-input, .date-input {
+  padding: 10px 14px;
+  border: 1.5px solid $border;
+  border-radius: 9px;
+  font-family: $font-body;
+  font-size: 14px;
+  background: $surface;
+
+  &:focus {
+    outline: none;
+    border-color: $accent;
+    box-shadow: 0 0 0 4px $accent-soft;
+  }
+}
+
+.search-input {
+  flex: 1;
+  min-width: 220px;
+}
+
+.date-input {
+  color: $ink-soft;
+}
+
+.clear-btn {
+  background: transparent;
+  border: 1.5px solid $border;
+  color: $ink-soft;
+  padding: 10px 16px;
+  border-radius: 9px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+
+  &:hover {
+    border-color: $ink-faint;
+    color: $ink;
+  }
+}
+
+.loading-state, .empty-state {
+  text-align: center;
+  color: $ink-soft;
+  padding: 60px 20px;
+  font-size: 14px;
+
+  span {
+    display: block;
+    margin-top: 4px;
+    color: $ink-faint;
+    font-size: 13px;
+  }
+}
+
+.error {
+  color: $danger;
+  background: $danger-soft;
+  padding: 10px 14px;
+  border-radius: 8px;
+  font-size: 13.5px;
+  margin-bottom: 16px;
+}
+
+.meetings-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 16px;
+}
+
+.meeting-card {
+  background: $surface;
+  border: 1px solid $border;
+  border-radius: 14px;
+  padding: 20px 22px;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(23, 27, 33, 0.08);
+    border-color: #d3d8e2;
+  }
+
+  h3 {
+    font-family: $font-display;
+    font-size: 16.5px;
+    font-weight: 600;
+    color: $ink;
+    margin: 4px 0 6px;
+  }
+}
+
+.card-top {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 4px;
+}
+
+.status-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: $ink-faint;
+
+  &.saved { background: $success; }
+}
+
+.status-label {
+  font-family: $font-mono;
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: $ink-faint;
+}
+
+.card-description {
+  font-size: 13px;
+  color: $ink-soft;
+  margin: 0 0 14px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.card-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 14px;
+}
+
+.badge {
+  background: $accent-soft;
+  color: $accent;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 3px 9px;
+  border-radius: 20px;
+}
+
+.meta-item {
+  font-size: 12px;
+  color: $ink-faint;
+  font-family: $font-mono;
+}
+
+.card-footer {
+  display: flex;
+  gap: 14px;
+  padding-top: 12px;
+  border-top: 1px solid $border;
+}
+
+.footer-item {
+  font-size: 12px;
+  color: $ink-soft;
+}
+
+@media (max-width: 600px) {
+  .page { padding: 32px 16px 40px; }
+  .meetings-grid { grid-template-columns: 1fr; }
+}
+.card-top {
+  position: relative;
+}
+
+.delete-btn {
+  position: absolute;
+  right: 0;
+  top: -2px;
+  background: transparent;
+  border: none;
+  font-size: 14px;
+  color: $ink-faint;
+  cursor: pointer;
+  padding: 4px 6px;
+  border-radius: 6px;
+  opacity: 0;
+  transition: opacity 0.15s ease, background 0.15s ease, color 0.15s ease;
+}
+
+.meeting-card:hover .delete-btn {
+  opacity: 1;
+}
+
+.delete-btn:hover {
+  background: $danger-soft;
+  color: $danger;
+}
+.header-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.logout-btn {
+  background: transparent;
+  border: 1.5px solid $border;
+  color: $ink-soft;
+  padding: 12px 18px;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+
+  &:hover { border-color: $ink-faint; color: $ink; }
+}

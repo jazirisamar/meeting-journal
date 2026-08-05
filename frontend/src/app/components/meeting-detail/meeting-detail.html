@@ -1,0 +1,118 @@
+<p class="error" *ngIf="errorMessage">{{ errorMessage }}</p>
+<p class="loading-state" *ngIf="!meeting && !errorMessage">Chargement...</p>
+
+<div class="detail-container" *ngIf="meeting">
+
+  <div class="header" *ngIf="!isEditing">
+    <div class="header-top">
+      <h2>{{ meeting.title }}</h2>
+      <div class="header-actions">
+        <button class="icon-btn" (click)="startEditMeeting()" title="Modifier">✎</button>
+        <button class="icon-btn danger" (click)="deleteMeeting()" title="Supprimer">🗑</button>
+      </div>
+    </div>
+    <p class="description" *ngIf="meeting.description">{{ meeting.description }}</p>
+    <div class="meta">
+      <span *ngIf="meeting.category" class="badge">{{ meeting.category }}</span>
+      <span class="meta-item">{{ meeting.participants?.length || 0 }} participant(s)</span>
+      <span class="meta-item">{{ sortedNotes.length }} note(s)</span>
+    </div>
+  </div>
+
+  <div class="header edit-mode" *ngIf="isEditing">
+    <div class="form-group">
+      <label>Titre</label>
+      <input type="text" [(ngModel)]="editTitle" placeholder="Titre de la réunion" />
+    </div>
+    <div class="form-group">
+      <label>Description</label>
+      <textarea [(ngModel)]="editDescription" rows="2" placeholder="Description"></textarea>
+    </div>
+    <div class="form-group">
+      <label>Catégorie</label>
+      <input type="text" [(ngModel)]="editCategory" placeholder="Catégorie" />
+    </div>
+    <div class="edit-actions">
+      <button class="save-edit-btn" (click)="saveEditMeeting()" [disabled]="!editTitle.trim()">Enregistrer</button>
+      <button class="cancel-edit-btn" (click)="cancelEditMeeting()">Annuler</button>
+    </div>
+  </div>
+
+  <div class="video-section">
+    <video #videoPlayer [src]="videoUrl" controls *ngIf="videoUrl"></video>
+    <p class="no-video" *ngIf="!videoUrl">Aucune vidéo disponible pour cette réunion.</p>
+  </div>
+
+  <div class="add-note-bar" *ngIf="videoUrl">
+    <input
+      type="text"
+      [(ngModel)]="newNoteText"
+      placeholder="Ajouter une note à l'instant actuel de la vidéo..."
+      (keyup.enter)="addNote()"
+    />
+    <button (click)="addNote()">Ajouter</button>
+  </div>
+
+  <div class="transcription-section" *ngIf="videoUrl">
+    <h4>Transcription</h4>
+
+    <button
+      *ngIf="meeting.transcriptionStatus === 'none' || meeting.transcriptionStatus === 'failed'"
+      (click)="launchTranscription()"
+      [disabled]="isTranscribing"
+      class="transcribe-btn"
+    >
+      Générer la transcription
+    </button>
+
+    <p class="transcribing-state" *ngIf="isTranscribing || meeting.transcriptionStatus === 'pending'">
+      ⏳ Transcription en cours...
+    </p>
+
+    <p class="transcribe-error" *ngIf="meeting.transcriptionStatus === 'failed' && !isTranscribing">
+      Échec de la transcription. Réessaie.
+    </p>
+
+   <div class="transcription-text" *ngIf="meeting.transcriptionStatus === 'done' && meeting.transcriptionSegments?.length">
+  <div class="speaker-segment" *ngFor="let segment of meeting.transcriptionSegments">
+    <span class="speaker-label" [style.color]="getSpeakerColor(segment.speaker)">{{ segment.speaker }}</span>
+    <span class="segment-text">{{ segment.text }}</span>
+  </div>
+</div>
+
+<div class="transcription-text" *ngIf="meeting.transcriptionStatus === 'done' && !meeting.transcriptionSegments?.length && meeting.transcription">
+  {{ meeting.transcription }}
+</div>
+  </div>
+
+  <div class="notes-section">
+    <h4>Notes ({{ sortedNotes.length }})</h4>
+
+    <p class="empty-notes" *ngIf="sortedNotes.length === 0">Aucune note pour cette réunion.</p>
+
+    <ul class="notes-timeline">
+      <li *ngFor="let note of sortedNotes">
+
+        <button class="note-time" (click)="seekTo(note.timestamp)">
+          {{ formatTime(note.timestamp) }}
+        </button>
+
+        <div class="note-body" *ngIf="editingNoteId !== note._id">
+          <span class="note-text" (click)="seekTo(note.timestamp)">{{ note.content }}</span>
+          <div class="note-actions">
+            <button class="icon-btn" (click)="startEditNote(note)" title="Modifier">✎</button>
+            <button class="icon-btn danger" (click)="deleteNote(note._id!)" title="Supprimer">✕</button>
+          </div>
+        </div>
+
+        <div class="note-edit" *ngIf="editingNoteId === note._id">
+          <input type="text" [(ngModel)]="editingText" (keyup.enter)="saveEditNote(note._id!)" />
+          <button class="icon-btn" (click)="saveEditNote(note._id!)" title="Enregistrer">✓</button>
+          <button class="icon-btn" (click)="cancelEditNote()" title="Annuler">✕</button>
+        </div>
+
+      </li>
+    </ul>
+  </div>
+
+</div>

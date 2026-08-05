@@ -1,0 +1,113 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@600;700&family=Inter:wght@400;500;600&display=swap');
+
+$ink: #171b21;
+$ink-soft: #5c6470;
+$accent: #3652e3;
+$accent-hover: #2c44c4;
+$accent-soft: #edeffd;
+$success: #17a589;
+$success-soft: #e7f7f1;
+$danger: #d8455b;
+$danger-soft: #fbeaee;
+$border: #e1e4ea;
+$surface: #ffffff;
+
+.profile-page {
+  max-width: 560px;
+  margin: 0 auto;
+  padding: 32px 24px 60px;
+}
+
+.page-title {
+  margin-bottom: 24px;
+
+  h1 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 24px;
+    font-weight: 700;
+    color: $ink;
+    margin: 0 0 4px;
+  }
+
+  .subtitle {
+    color: $ink-soft;
+    font-size: 14px;
+    margin: 0;
+  }
+}
+
+.card {
+  background: $surface;
+  border: 1px solid $border;
+  border-radius: 14px;
+  padding: 26px 28px;
+  margin-bottom: 20px;
+
+  h3 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    color: $ink;
+    margin: 0 0 18px;
+  }
+}
+
+.form-group {
+  margin-bottom: 16px;
+
+  label {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    color: $ink-soft;
+    margin-bottom: 6px;
+  }
+
+  input {
+    width: 100%;
+    padding: 10px 13px;
+    border: 1.5px solid $border;
+    border-radius: 9px;
+    font-size: 14px;
+    box-sizing: border-box;
+    font-family: 'Inter', sans-serif;
+
+    &:focus {
+      outline: none;
+      border-color: $accent;
+      box-shadow: 0 0 0 4px $accent-soft;
+    }
+  }
+}
+
+.success {
+  color: $success;
+  background: $success-soft;
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-size: 13px;
+  margin-bottom: 14px;
+}
+
+.error {
+  color: $danger;
+  background: $danger-soft;
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-size: 13px;
+  margin-bottom: 14px;
+}
+
+.save-btn {
+  background: $accent;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 9px;
+  font-weight: 600;
+  font-size: 13.5px;
+  cursor: pointer;
+
+  &:hover:not(:disabled) { background: $accent-hover; }
+  &:disabled { opacity: 0.6; cursor: not-allowed; }
+}

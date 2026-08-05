@@ -1,0 +1,55 @@
+<div class="app-shell">
+
+  <!-- Overlay mobile -->
+  <div class="sidebar-overlay" *ngIf="sidebarOpen" (click)="toggleSidebar()"></div>
+
+  <!-- Sidebar -->
+  <aside class="sidebar" [class.open]="sidebarOpen">
+    <div class="brand">
+      <span class="brand-mark">MJ</span>
+      <span class="brand-name">Meeting Journal</span>
+    </div>
+
+    <button class="new-meeting-btn" (click)="goToCreate()">
+      <span class="plus">+</span> Nouvelle réunion
+    </button>
+
+   <nav class="nav-links">
+  <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" class="nav-link">
+    <span class="nav-icon">▤</span>
+    Réunions
+  </a>
+  <a routerLink="/profile" routerLinkActive="active" class="nav-link">
+    <span class="nav-icon">◉</span>
+    Mon profil
+  </a>
+</nav>
+
+    <div class="sidebar-footer">
+      <a routerLink="/profile" class="user-chip">
+  <span class="avatar">{{ userInitials }}</span>
+  <span class="user-name">{{ userName }}</span>
+</a>
+      <button class="logout-btn" (click)="logout()" title="Déconnexion">⏻</button>
+    </div>
+  </aside>
+
+  <!-- Colonne principale -->
+  <div class="main-column">
+
+    <!-- Navbar -->
+    <header class="navbar">
+      <button class="menu-toggle" (click)="toggleSidebar()">☰</button>
+      <div class="navbar-spacer"></div>
+      <div class="navbar-user">
+        <span class="avatar small">{{ userInitials }}</span>
+      </div>
+    </header>
+
+    <!-- Contenu de la page -->
+    <main class="page-content">
+      <router-outlet></router-outlet>
+    </main>
+
+  </div>
+</div>

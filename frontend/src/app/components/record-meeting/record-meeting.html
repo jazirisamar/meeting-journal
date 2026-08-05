@@ -1,0 +1,66 @@
+<p class="error" *ngIf="errorMessage">{{ errorMessage }}</p>
+
+<p class="loading-state" *ngIf="!meeting && !errorMessage">Chargement de la réunion...</p>
+
+<div class="record-container" *ngIf="meeting">
+  <div class="meeting-header">
+    <h2>{{ meeting.title }}</h2>
+    <p class="description" *ngIf="meeting.description">{{ meeting.description }}</p>
+  </div>
+
+  <div class="deck">
+    <div class="rec-indicator" [class.live]="status === 'recording'">
+      <span class="dot"></span>
+      {{ status === 'recording' ? 'ENREGISTREMENT' : status === 'stopped' ? 'TERMINÉ' : 'PRÊT' }}
+    </div>
+    <div class="timer">{{ formatTime(elapsedSeconds) }}</div>
+  </div>
+
+  <div class="controls" *ngIf="status === 'idle'">
+    <button (click)="startRecording()" class="start-btn">Démarrer l'enregistrement</button>
+  </div>
+
+  <div class="controls" *ngIf="status === 'recording'">
+    <button (click)="stopRecording()" class="stop-btn">Arrêter l'enregistrement</button>
+
+    <div class="notes-input">
+      <input
+        type="text"
+        [(ngModel)]="currentNoteText"
+        placeholder="Ajouter une note à ce moment..."
+        (keyup.enter)="addNote()"
+      />
+      <button (click)="addNote()" class="add-note-btn">Ajouter</button>
+    </div>
+
+    <ul class="notes-timeline">
+      <li *ngFor="let note of notes">
+        <span class="note-time">{{ formatTime(note.timestamp) }}</span>
+        <span class="note-text">{{ note.content }}</span>
+      </li>
+    </ul>
+  </div>
+
+ <div class="result" *ngIf="status === 'stopped'">
+    <p class="done-badge">✅ Enregistrement terminé</p>
+    <video [src]="recordedVideoUrl" controls></video>
+
+    <h4>Notes prises</h4>
+    <ul class="notes-timeline">
+      <li *ngFor="let note of notes">
+        <span class="note-time">{{ formatTime(note.timestamp) }}</span>
+        <span class="note-text">{{ note.content }}</span>
+      </li>
+    </ul>
+
+    <div *ngIf="!isUploading">
+      <button (click)="saveMeeting()" class="save-btn">Sauvegarder la réunion</button>
+      <p class="error" *ngIf="uploadError">{{ uploadError }}</p>
+    </div>
+
+    <div *ngIf="isUploading" class="upload-progress">
+      <p>Finalisation en cours...</p>
+    </div>
+  </div>
+</div>
+   

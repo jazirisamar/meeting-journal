@@ -1,0 +1,55 @@
+<div class="page">
+  <div class="filters-bar">
+    <input
+      type="text"
+      class="search-input"
+      placeholder="Rechercher par titre..."
+      [(ngModel)]="searchTerm"
+      (ngModelChange)="onSearchChange()"
+    />
+    <input
+      type="date"
+      class="date-input"
+      [(ngModel)]="dateFilter"
+      (ngModelChange)="onDateChange()"
+    />
+    <button class="clear-btn" *ngIf="searchTerm || dateFilter" (click)="clearFilters()">
+      Réinitialiser
+    </button>
+  </div>
+
+  <p class="error" *ngIf="errorMessage">{{ errorMessage }}</p>
+  <p class="loading-state" *ngIf="isLoading">Chargement...</p>
+
+  <p class="empty-state" *ngIf="!isLoading && meetings.length === 0">
+    Aucune réunion trouvée.
+    <span *ngIf="!searchTerm && !dateFilter">Crée ta première réunion pour commencer.</span>
+  </p>
+
+  <div class="meetings-grid" *ngIf="!isLoading && meetings.length > 0">
+    <div class="meeting-card" *ngFor="let meeting of meetings" (click)="goToMeeting(meeting)">
+      <div class="card-top">
+        <span class="status-dot" [class.saved]="meeting.status === 'saved'"></span>
+        <span class="status-label">
+          {{ meeting.status === 'saved' ? 'Enregistrée' : 'Non finalisée' }}
+        </span>
+        <button class="delete-btn" (click)="deleteMeeting($event, meeting)" title="Supprimer">🗑</button>
+      </div>
+
+      <h3>{{ meeting.title }}</h3>
+      <p class="card-description" *ngIf="meeting.description">{{ meeting.description }}</p>
+
+      <div class="card-meta">
+        <span class="badge" *ngIf="meeting.category">{{ meeting.category }}</span>
+        <span class="meta-item">{{ formatDate(meeting.createdAt) }}</span>
+        <span class="meta-item">{{ formatDuration(meeting.duration) }}</span>
+      </div>
+
+      <div class="card-footer">
+        <span class="footer-item">{{ meeting.notes?.length || 0 }} note(s)</span>
+        <span class="footer-item" *ngIf="meeting.transcriptionStatus === 'done'">📝 Transcrite</span>
+        <span class="footer-item">{{ meeting.participants?.length || 0 }} participant(s)</span>
+      </div>
+    </div>
+  </div>
+</div>

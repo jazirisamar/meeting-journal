@@ -1,0 +1,121 @@
+<div class="create-meeting-container">
+ <h2>Créer une nouvelle réunion</h2>
+<p class="subtitle">Les participants seront invités par email dès la création.</p>
+
+  <form #meetingForm="ngForm" (ngSubmit)="onSubmit()">
+    <div class="form-group">
+      <label for="title">Titre *</label>
+      <input
+        id="title"
+        type="text"
+        [(ngModel)]="title"
+        name="title"
+        placeholder="Ex: Réunion équipe marketing"
+        required
+        #titleField="ngModel"
+      />
+      <p class="field-error" *ngIf="titleField.invalid && titleField.touched">
+        Le titre est obligatoire.
+      </p>
+    </div>
+
+    <div class="form-group">
+      <label for="description">Description (facultative)</label>
+      <textarea
+        id="description"
+        [(ngModel)]="description"
+        name="description"
+        rows="3"
+        placeholder="Décrivez brièvement l'objectif de la réunion..."
+      ></textarea>
+    </div>
+
+   <div class="form-group">
+  <div class="participants-header">
+    <label>Participants *</label>
+    <button
+      type="button"
+      class="contacts-toggle-btn"
+      *ngIf="savedContacts.length > 0"
+      (click)="showContactPicker = !showContactPicker"
+    >
+      📇 Mes contacts
+    </button>
+  </div>
+
+  <div class="contact-picker" *ngIf="showContactPicker">
+    <div
+      class="contact-chip"
+      *ngFor="let contact of savedContacts"
+      (click)="addFromContact(contact)"
+    >
+      <span class="contact-name">{{ contact.name }}</span>
+      <span class="contact-email">{{ contact.email }}</span>
+    </div>
+    <p class="no-contacts" *ngIf="savedContacts.length === 0">Aucun contact enregistré pour l'instant.</p>
+  </div>
+
+  <div *ngFor="let participant of participants; let i = index" class="participant-row">
+    <div class="participant-field">
+      <input
+        type="text"
+        [(ngModel)]="participant.name"
+        [name]="'name-' + i"
+        placeholder="Nom"
+        required
+        #nameField="ngModel"
+      />
+      <p class="field-error" *ngIf="nameField.invalid && nameField.touched">Nom requis.</p>
+    </div>
+
+    <div class="participant-field">
+      <input
+        type="email"
+        [(ngModel)]="participant.email"
+        [name]="'email-' + i"
+        placeholder="email@exemple.com"
+        required
+        email
+        #emailField="ngModel"
+      />
+      <p class="field-error" *ngIf="emailField.invalid && emailField.touched">
+        {{ emailField.errors?.['required'] ? 'Email requis.' : 'Email invalide.' }}
+      </p>
+    </div>
+
+    <button
+      type="button"
+      class="save-contact-btn"
+      (click)="saveParticipantAsContact(participant)"
+      title="Enregistrer comme contact"
+      [disabled]="!participant.name.trim() || !participant.email.trim()"
+    >💾</button>
+
+    <button
+      type="button"
+      (click)="removeParticipant(i)"
+      class="remove-btn"
+      [disabled]="participants.length === 1"
+    >✕</button>
+  </div>
+  <button type="button" (click)="addParticipant()" class="add-btn">+ Ajouter un participant</button>
+</div>
+
+    <div class="form-group">
+      <label for="category">Catégorie</label>
+      <input
+        id="category"
+        type="text"
+        [(ngModel)]="category"
+        name="category"
+        placeholder="Ex: Marketing, Technique, RH..."
+      />
+    </div>
+
+    <p class="error" *ngIf="errorMessage">{{ errorMessage }}</p>
+
+    <button type="submit" [disabled]="isSubmitting || meetingForm.invalid">
+      {{ isSubmitting ? 'Création en cours...' : 'Créer et démarrer l\'enregistrement' }}
+    </button>
+  </form>
+</div>

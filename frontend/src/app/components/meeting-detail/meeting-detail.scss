@@ -1,0 +1,419 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;600&display=swap');
+
+$bg: #eef0f4;
+$surface: #ffffff;
+$ink: #171b21;
+$ink-soft: #5c6470;
+$ink-faint: #9aa1ac;
+$accent: #3652e3;
+$accent-hover: #2c44c4;
+$accent-soft: #edeffd;
+$danger: #d8455b;
+$danger-soft: #fbeaee;
+$success: #17a589;
+$border: #e1e4ea;
+
+$font-display: 'Space Grotesk', 'Segoe UI', sans-serif;
+$font-body: 'Inter', 'Segoe UI', sans-serif;
+$font-mono: 'JetBrains Mono', 'Consolas', monospace;
+
+:host {
+  display: block;
+  background: $bg;
+  min-height: 100vh;
+  padding: 48px 20px;
+  font-family: $font-body;
+}
+
+.loading-state {
+  text-align: center;
+  color: $ink-soft;
+  margin-top: 80px;
+}
+
+.error {
+  max-width: 720px;
+  margin: 0 auto 16px;
+  color: $danger;
+  background: $danger-soft;
+  padding: 10px 14px;
+  border-radius: 8px;
+  font-size: 13.5px;
+}
+
+.detail-container {
+  max-width: 720px;
+  margin: 0 auto;
+  background: $surface;
+  border-radius: 16px;
+  border: 1px solid $border;
+  box-shadow: 0 1px 2px rgba(23, 27, 33, 0.04), 0 12px 32px rgba(23, 27, 33, 0.06);
+  padding: 36px 40px 40px;
+}
+
+.header {
+  margin-bottom: 24px;
+
+  h2 {
+    font-family: $font-display;
+    font-size: 24px;
+    font-weight: 600;
+    color: $ink;
+    margin: 0 0 6px;
+  }
+
+  .description {
+    color: $ink-soft;
+    font-size: 14px;
+    margin: 0 0 12px;
+  }
+}
+
+.meta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.badge {
+  background: $accent-soft;
+  color: $accent;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 20px;
+}
+
+.meta-item {
+  font-size: 12.5px;
+  color: $ink-faint;
+  font-family: $font-mono;
+}
+
+.video-section {
+  margin-bottom: 6px;
+
+  video {
+    width: 100%;
+    border-radius: 12px;
+    background: #000;
+    display: block;
+  }
+
+  .no-video {
+    background: #f6f7f9;
+    border: 1px dashed $border;
+    border-radius: 12px;
+    padding: 40px;
+    text-align: center;
+    color: $ink-faint;
+    font-size: 14px;
+  }
+}
+
+.add-note-bar {
+  display: flex;
+  gap: 8px;
+  margin: 16px 0 8px;
+
+  input {
+    flex: 1;
+    padding: 11px 13px;
+    border: 1.5px solid $border;
+    border-radius: 9px;
+    font-family: $font-body;
+    font-size: 14px;
+    background: #fcfcfd;
+
+    &:focus {
+      outline: none;
+      border-color: $accent;
+      background: #fff;
+      box-shadow: 0 0 0 4px $accent-soft;
+    }
+  }
+
+  button {
+    background: $accent;
+    color: #fff;
+    border: none;
+    padding: 0 20px;
+    border-radius: 9px;
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+
+    &:hover { background: $accent-hover; }
+  }
+}
+
+.notes-section {
+  margin-top: 28px;
+
+  h4 {
+    font-family: $font-display;
+    font-size: 13px;
+    font-weight: 600;
+    color: $ink-soft;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    margin: 0 0 12px;
+  }
+}
+
+.empty-notes {
+  color: $ink-faint;
+  font-size: 13.5px;
+  font-style: italic;
+}
+
+.notes-timeline {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+
+  li {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 0;
+    border-bottom: 1px solid $border;
+
+    &:last-child { border-bottom: none; }
+  }
+}
+
+.note-time {
+  font-family: $font-mono;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: $accent;
+  background: $accent-soft;
+  border: none;
+  padding: 4px 9px;
+  border-radius: 6px;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: background 0.15s ease;
+
+  &:hover { background: #dfe3fa; }
+}
+
+.note-body {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex: 1;
+  min-width: 0;
+
+  .note-text {
+    font-size: 14px;
+    color: $ink;
+    cursor: pointer;
+    flex: 1;
+
+    &:hover { color: $accent; }
+  }
+}
+
+.note-actions {
+  display: flex;
+  gap: 4px;
+  flex-shrink: 0;
+}
+
+.icon-btn {
+  width: 26px;
+  height: 26px;
+  padding: 0;
+  border: 1px solid $border;
+  background: #fff;
+  border-radius: 6px;
+  font-size: 12px;
+  color: $ink-faint;
+  cursor: pointer;
+
+  &:hover {
+    border-color: $accent;
+    color: $accent;
+  }
+
+  &.danger:hover {
+    border-color: $danger;
+    color: $danger;
+    background: $danger-soft;
+  }
+}
+
+.note-edit {
+  display: flex;
+  gap: 6px;
+  flex: 1;
+
+  input {
+    flex: 1;
+    padding: 6px 10px;
+    border: 1.5px solid $accent;
+    border-radius: 6px;
+    font-size: 13.5px;
+
+    &:focus {
+      outline: none;
+    }
+  }
+}
+
+@media (max-width: 600px) {
+  .detail-container { padding: 26px 22px 30px; }
+}
+.transcription-section {
+  margin-top: 28px;
+  padding-top: 20px;
+  border-top: 1px solid $border;
+
+  h4 {
+    font-family: $font-display;
+    font-size: 13px;
+    font-weight: 600;
+    color: $ink-soft;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    margin: 0 0 12px;
+  }
+}
+
+.transcribe-btn {
+  background: $accent-soft;
+  color: $accent;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 9px;
+  font-weight: 600;
+  font-size: 13.5px;
+  cursor: pointer;
+
+  &:hover:not(:disabled) { background: #dfe3fa; }
+  &:disabled { opacity: 0.6; cursor: not-allowed; }
+}
+
+.transcribing-state {
+  color: $ink-soft;
+  font-size: 13.5px;
+  font-style: italic;
+}
+
+.transcribe-error {
+  color: $danger;
+  font-size: 13.5px;
+}
+
+.transcription-text {
+  background: #f8f9fb;
+  border-radius: 10px;
+  padding: 16px 18px;
+  font-size: 14px;
+  line-height: 1.7;
+  color: $ink;
+  max-height: 300px;
+  overflow-y: auto;
+}
+.header-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.header-actions {
+  display: flex;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.edit-mode {
+  .form-group {
+    margin-bottom: 14px;
+
+    label {
+      display: block;
+      font-size: 12.5px;
+      font-weight: 600;
+      color: $ink-soft;
+      margin-bottom: 6px;
+    }
+
+    input, textarea {
+      width: 100%;
+      padding: 9px 12px;
+      border: 1.5px solid $border;
+      border-radius: 8px;
+      font-family: $font-body;
+      font-size: 14px;
+      box-sizing: border-box;
+
+      &:focus {
+        outline: none;
+        border-color: $accent;
+        box-shadow: 0 0 0 4px $accent-soft;
+      }
+    }
+
+    textarea { resize: vertical; }
+  }
+}
+
+.edit-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.save-edit-btn {
+  background: $accent;
+  color: #fff;
+  border: none;
+  padding: 9px 18px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 13.5px;
+  cursor: pointer;
+
+  &:hover:not(:disabled) { background: $accent-hover; }
+  &:disabled { opacity: 0.5; cursor: not-allowed; }
+}
+
+.cancel-edit-btn {
+  background: transparent;
+  border: 1.5px solid $border;
+  color: $ink-soft;
+  padding: 9px 18px;
+  border-radius: 8px;
+  font-size: 13.5px;
+  cursor: pointer;
+
+  &:hover { border-color: $ink-faint; color: $ink; }
+}
+.speaker-segment {
+  margin-bottom: 12px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid $border;
+
+  &:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+}
+
+.speaker-label {
+  display: block;
+  font-family: $font-mono;
+  font-size: 11.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  margin-bottom: 4px;
+}
+
+.segment-text {
+  font-size: 14px;
+  color: $ink;
+  line-height: 1.6;
+}
