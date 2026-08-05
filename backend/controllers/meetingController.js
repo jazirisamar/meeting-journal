@@ -285,11 +285,18 @@ exports.transcribeMeeting = async (req, res) => {
     // Traitement asynchrone après la réponse
     try {
       const filename = meeting.videoPath.split('/').pop();
-      const text = await transcriptionService.transcribeVideo(filename);
+      const result = await transcriptionService.transcribeVideo(filename);
 
       await meetingsCollection().updateOne(
         { _id: meeting._id },
-        { $set: { transcription: text, transcriptionStatus: 'done', updatedAt: new Date() } }
+        {
+          $set: {
+            transcription: result.text,
+            transcriptionSegments: result.segments,
+            transcriptionStatus: 'done',
+            updatedAt: new Date()
+          }
+        }
       );
     } catch (err) {
       console.error('Erreur transcription:', err.message);
@@ -301,8 +308,9 @@ exports.transcribeMeeting = async (req, res) => {
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
-  };
-  const fs = require('fs');
+};
+
+const fs = require('fs');
 const path = require('path');
 
 // Dossier temporaire pour les enregistrements en cours

@@ -22,7 +22,7 @@
     "mongodb": "^7.5.0",
     "multer": "^2.2.0",
     "nodemailer": "^9.0.3",
-    "openai": "^7.3.0"
+    "openai": "^7.4.0"
   },
   "devDependencies": {
     "nodemon": "^3.1.14"

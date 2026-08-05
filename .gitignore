@@ -1,16 +1,18 @@
-# Dépendances
-node_modules/
+# Backend
 backend/node_modules/
-
-# Variables d'environnement
-.env
 backend/.env
+backend/uploads/videos/*
+backend/uploads/audio/*
+backend/uploads/tmp/*
+!backend/uploads/videos/.gitkeep
+!backend/uploads/audio/.gitkeep
+!backend/uploads/tmp/.gitkeep
 
-# Uploads
-backend/uploads/videos/
+# Frontend
+frontend/node_modules/
+frontend/dist/
+frontend/.angular/
 
-# Angular
-dist/
-
-# Logs
+# Général
+.DS_Store
 *.log
